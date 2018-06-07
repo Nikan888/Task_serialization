@@ -16,15 +16,17 @@ namespace Task_Serialization
 {
     class Program
     {
+        public static List<Book> bookList = new List<Book>();
+
         static void Main(string[] args)
         {
-            BookList bookList = new BookList();
-            bookList.AddBookToList("1984", "Orwell", "Social Science Fiction", 25);
-            bookList.AddBookToList("Dune", "Herbert", "Science Fiction", 74);
-            bookList.AddBookToList("Starship Troopers", "Heinlein", "Military Science Fiction", 98);
-            bookList.AddBookToList("Fahrenheit 451", "Bradbury", "Dystopian", 12);
-            bookList.AddBookToList("Nightfall", "Asimov", "Science Fiction", 115);
-            bookList.AddBookToList("Hard to Be a God", "Strugatsky", "Science Fiction", 24);
+
+            AddBookToList("1984", "Orwell", "Social Science Fiction", 25);
+            AddBookToList("Dune", "Herbert", "Science Fiction", 74);
+            AddBookToList("Starship Troopers", "Heinlein", "Military Science Fiction", 98);
+            AddBookToList("Fahrenheit 451", "Bradbury", "Dystopian", 12);
+            AddBookToList("Nightfall", "Asimov", "Science Fiction", 115);
+            AddBookToList("Hard to Be a God", "Strugatsky", "Science Fiction", 24);
 
             try
             {
@@ -47,7 +49,18 @@ namespace Task_Serialization
             }
         }
 
-        public static void SaveXMLFile(string pathToFile, BookList bookList)
+        public static void AddBookToList(string name, string authorName, string genre, double price)
+        {
+            bookList.Add(new Book
+            {
+                Name = name,
+                AuthorName = authorName,
+                Genre = genre,
+                Price = price
+            });
+        }
+
+        public static void SaveXMLFile(string pathToFile, List<Book> bookList)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Book>));
             string xml;
@@ -79,7 +92,7 @@ namespace Task_Serialization
 
         public static void ReadXMLFile(string pathToFile)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Book));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Book>));
             string xml = File.ReadAllText(pathToFile);
             using (StringReader stringReader = new StringReader(xml))
             {
@@ -107,7 +120,7 @@ namespace Task_Serialization
             //    else throw new Exception("Списка не существует");
         }
 
-        public static void SaveJSONFile(string pathToFile, BookList bookList)
+        public static void SaveJSONFile(string pathToFile, List<Book> bookList)
         {
             using (Stream stream = new FileStream(pathToFile, FileMode.Create))
             {
@@ -142,7 +155,7 @@ namespace Task_Serialization
             //    }
         }
 
-        public static void SaveBinaryFile(string pathToFile, BookList bookList)
+        public static void SaveBinaryFile(string pathToFile, List<Book> bookList)
         {
             IFormatter formatter = new BinaryFormatter();
             using (Stream stream = new FileStream(pathToFile, FileMode.Create))
