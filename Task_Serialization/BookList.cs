@@ -32,16 +32,5 @@ namespace Task_Serialization
         {
             books.Remove(book);
         }
-
-        //public static void SaveXMLFile()
-        //{
-        //    XDocument xDoc = new XDocument(
-        //            new XElement("Books",
-        //                new XElement("Book",
-        //                    new XElement("Name", "1984"),
-        //                    new XElement("Author", "Orwell"))));
-        //                    
-        //    xDoc.Save("books.xml");
-        //}
     }
 }
